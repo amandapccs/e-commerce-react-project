@@ -18,7 +18,7 @@ class Home extends React.Component {
     const list = await getCategories();
     this.setState({ categoriesList: list,
     });
-    console.log(this.list);
+    // console.log(this.list);
   }
 
   handleChange = ({ target }) => {
@@ -28,8 +28,12 @@ class Home extends React.Component {
   handleClick = async () => {
     const { searchInput, getCategory } = this.state;
     const getPrdcts = await getProductsFromCategoryAndQuery(getCategory, searchInput);
-    console.log(getPrdcts);
     this.setState({ products: getPrdcts });
+  }
+
+  getCategoryItens = ({ target }) => {
+    const { id } = target;
+    this.setState(({ getCategory: id }), () => this.handleClick()); // chamará handleClick pois é nela onde a requisição à API é feita
   }
 
   render() {
@@ -39,15 +43,15 @@ class Home extends React.Component {
         <aside>
           <h3>Categorias:</h3>
           {categoriesList.map((category) => (
-            <label htmlFor={ category.name } key={ category.id } data-testid="category">
-              <input
-                id={ category.name }
-                type="radio"
-                name="category"
-                value={ category.name }
-              />
-              {category.name}
-            </label>
+            <button
+              key={ category.id }
+              id={ category.id }
+              data-testid="category"
+              type="button"
+              onClick={ this.getCategoryItens }
+            >
+              { category.name }
+            </button>
 
           ))}
         </aside>
