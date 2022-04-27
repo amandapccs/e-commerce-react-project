@@ -19,6 +19,7 @@ class Description extends React.Component {
   render() {
     const { product } = this.state;
     const { thumbnail, title, price, attributes } = product;
+    console.log(product);
     return (
       <main>
         <div data-testid="product-detail-name">
@@ -27,13 +28,14 @@ class Description extends React.Component {
         </div>
         <div>
           <h3>Especificações Técnicas</h3>
-          { product.length !== 0 && attributes.map((description) => (
-            <ul key={ description.id }>
-              <li>{description.name}</li>
-            </ul>
-          )) }
           <ul>
-            <li />
+            { product.length !== 0 && attributes.map((description) => (
+              <li key={ description.id }>
+                {description.name}
+                :
+                { description.value_name }
+              </li>
+            )) }
           </ul>
         </div>
       </main>
