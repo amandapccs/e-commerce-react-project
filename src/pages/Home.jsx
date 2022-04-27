@@ -11,6 +11,7 @@ class Home extends React.Component {
       searchInput: '',
       getCategory: '',
       products: null,
+      productCart: [],
     };
   }
 
@@ -34,6 +35,43 @@ class Home extends React.Component {
   getCategoryItens = ({ target }) => {
     const { id } = target;
     this.setState(({ getCategory: id }), () => this.handleClick()); // chamará handleClick pois é nela onde a requisição à API é feita
+  }
+
+  addToCart = (product) => {
+    const { productCart } = this.state;
+    let productList = [...productCart];
+
+    const elemento = productList.find((prod) => prod.id === product.id);
+    if (elemento) {
+      productList = productList.map((prod) => {
+        if (prod.id === product.id) {
+          prod.quantity += 1;
+        }
+        return prod;
+      });
+    } else {
+      productList = [...productList, { ...product, quantity: 1 }];
+    }
+    localStorage.setItem('productCart', JSON.stringify(productList));
+    this.setState({ productCart: productList });
+  }
+
+  subtractFromCart = (product) => {
+    const { productCart } = this.state;
+    let productList = [...productCart];
+
+    const elemento = productList.find((prod) => prod.id === product.id);
+    if (elemento) {
+      productList = productList.map((prod) => {
+        if (prod.id === product.id) {
+          prod.quantity -= 1;
+        }
+        return prod;
+      });
+      productList = productList.filter((prod) => prod.quantity >= 1);
+    }
+    localStorage.setItem('productCart', JSON.stringify(productList));
+    this.setState({ productCart: productList });
   }
 
   render() {
@@ -76,7 +114,8 @@ class Home extends React.Component {
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
 
-        { products !== null && <Products products={ products } /> }
+        { products !== null
+        && <Products products={ products } handleClick={ this.addToCart } /> }
       </div>
     );
   }
