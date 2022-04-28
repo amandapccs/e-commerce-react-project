@@ -4,20 +4,7 @@ import { Link } from 'react-router-dom';
 import ProductInCart from '../components/ProductInCart';
 
 export default class ShoppingCart extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     products: JSON.parse(localStorage.getItem('productCart')) || [],
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   const productsCart = JSON.parse(localStorage.getItem('productCart'));
-  //   this.setState({ products: productsCart });
-  // }
-
   render() {
-    // const { products } = this.state;
     const { cartProducts } = this.props;
     const isEmpty = cartProducts.length === 0;
     return (
@@ -26,7 +13,7 @@ export default class ShoppingCart extends React.Component {
         {isEmpty
         && (<p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>)}
         { cartProducts.map((product) => (
-          <ProductInCart key={ product.id } products={ cartProducts } />
+          <ProductInCart key={ product.id } products={ product } />
         )) }
       </section>
 
