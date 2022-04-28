@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import Products from '../components/Products';
@@ -11,7 +12,6 @@ class Home extends React.Component {
       searchInput: '',
       getCategory: '',
       products: null,
-      productCart: [],
     };
   }
 
@@ -37,45 +37,9 @@ class Home extends React.Component {
     this.setState(({ getCategory: id }), () => this.handleClick()); // chamará handleClick pois é nela onde a requisição à API é feita
   }
 
-  addToCart = (product) => {
-    const { productCart } = this.state;
-    let productList = [...productCart];
-
-    const elemento = productList.find((prod) => prod.id === product.id);
-    if (elemento) {
-      productList = productList.map((prod) => {
-        if (prod.id === product.id) {
-          prod.quantity += 1;
-        }
-        return prod;
-      });
-    } else {
-      productList = [...productList, { ...product, quantity: 1 }];
-    }
-    localStorage.setItem('productCart', JSON.stringify(productList));
-    this.setState({ productCart: productList });
-  }
-
-  subtractFromCart = (product) => {
-    const { productCart } = this.state;
-    let productList = [...productCart];
-
-    const elemento = productList.find((prod) => prod.id === product.id);
-    if (elemento) {
-      productList = productList.map((prod) => {
-        if (prod.id === product.id) {
-          prod.quantity -= 1;
-        }
-        return prod;
-      });
-      productList = productList.filter((prod) => prod.quantity >= 1);
-    }
-    localStorage.setItem('productCart', JSON.stringify(productList));
-    this.setState({ productCart: productList });
-  }
-
   render() {
     const { categoriesList, products } = this.state;
+    const { addToCart } = this.props;
     return (
       <div>
         <aside>
@@ -115,10 +79,14 @@ class Home extends React.Component {
         </p>
 
         { products !== null
-        && <Products products={ products } handleClick={ this.addToCart } /> }
+        && <Products products={ products } handleClick={ addToCart } /> }
       </div>
     );
   }
 }
+
+Home.propTypes = {
+  addToCart: PropTypes.func.isRequired,
+};
 
 export default Home;

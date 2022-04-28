@@ -6,13 +6,40 @@ import ShoppingCart from './pages/ShoppingCart';
 import Description from './pages/Description';
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      cartProducts: [],
+    };
+  }
+
+  addToCart = (product) => {
+    const { cartProducts } = this.state;
+
+    this.setState((prevState) => ({ cartProducts: [...prevState.cartProducts, product] }),
+      () => {
+        localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+      });
+  }
+
   render() {
+    const { cartProducts } = this.state;
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={ Home } />
-          <Route path="/shopping-cart" component={ ShoppingCart } />
-          <Route exact path="/description/:id" component={ Description } />
+          <Route exact path="/" render={ () => <Home addToCart={ this.addToCart } /> } />
+          <Route
+            path="/shopping-cart"
+            render={ () => <ShoppingCart cartProducts={ cartProducts } /> }
+          />
+          <Route
+            exact
+            path="/description/:id"
+            render={ (props) => (<Description
+              { ...props }
+              handleClick={ this.addToCart }
+            />) }
+          />
         </Switch>
       </BrowserRouter>
     );
