@@ -21,36 +21,30 @@ export default class ProductInCart extends React.Component {
     const { products } = this.props;
     const { quantity } = this.state;
     return (
-      products.map((product) => (
-        <div key={ product.id }>
-          <p data-testid="shopping-cart-product-name">{ product.title }</p>
-          <img src={ product.thumbnail } alt={ product.title } />
-          <p>{ product.price }</p>
-
-          <p data-testid="shopping-cart-product-quantity">
-            {' '}
-            { quantity }
-            {' '}
-          </p>
-
-          <button
-            type="button"
-            data-testid="product-increase-quantity"
-            onClick={ this.addQuantity }
-          >
-            +
-
-          </button>
-          <button
-            type="button"
-            data-testid="product-decrease-quantity"
-            onClick={ this.subtractQuantity }
-          >
-            -
-
-          </button>
-        </div>
-      ))
+      <div key={ products.id }>
+        <p data-testid="shopping-cart-product-name">{ products.title }</p>
+        <img src={ products.thumbnail } alt={ products.title } />
+        <p>{ products.price }</p>
+        <p data-testid="shopping-cart-product-quantity">
+          {' '}
+          { quantity }
+          {' '}
+        </p>
+        <button
+          type="button"
+          data-testid="product-increase-quantity"
+          onClick={ this.addQuantity }
+        >
+          +
+        </button>
+        <button
+          type="button"
+          data-testid="product-decrease-quantity"
+          onClick={ this.subtractQuantity }
+        >
+          -
+        </button>
+      </div>
     );
   }
 }
