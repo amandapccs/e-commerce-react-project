@@ -25,7 +25,7 @@ class Description extends React.Component {
     console.log(product);
     return (
       <main>
-        <Link to="/shopping-cart">Ir ao Carrinho</Link>
+        <Link to="/shopping-cart" data-testid="shopping-cart-button">Ir ao Carrinho</Link>
         <div data-testid="product-detail-name">
           <h2>{ `${title} - R$${price}` }</h2>
           <img src={ thumbnail } alt={ title } />
