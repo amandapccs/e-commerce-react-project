@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getProductsId } from '../services/api';
 
 class Description extends React.Component {
@@ -13,15 +14,18 @@ class Description extends React.Component {
   async componentDidMount() {
     const { match } = this.props;
     const description = await getProductsId(match.params.id);
+    console.log(description);
     this.setState({ product: description });
   }
 
   render() {
     const { product } = this.state;
     const { thumbnail, title, price, attributes } = product;
+    const { handleClick } = this.props;
     console.log(product);
     return (
       <main>
+        <Link to="/shopping-cart">Ir ao Carrinho</Link>
         <div data-testid="product-detail-name">
           <h2>{ `${title} - R$${price}` }</h2>
           <img src={ thumbnail } alt={ title } />
@@ -37,6 +41,16 @@ class Description extends React.Component {
               </li>
             )) }
           </ul>
+          { product.length !== 0
+          && (
+            <button
+              type="button"
+              data-testid="product-detail-add-to-cart"
+              onClick={ () => handleClick(product) }
+            >
+              Adicionar ao carrinho
+
+            </button>)}
         </div>
       </main>
     );
@@ -45,6 +59,7 @@ class Description extends React.Component {
 
 Description.propTypes = {
   match: propTypes.objectOf(propTypes.any).isRequired,
+  handleClick: propTypes.func.isRequired,
 };
 
 export default Description;
