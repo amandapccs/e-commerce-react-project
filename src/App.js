@@ -9,8 +9,35 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      email: '',
+      message: '',
+      rating: 0,
       cartProducts: [],
+      reviewsList: [],
     };
+  }
+
+  onInputChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handlerSubmitButton = (productId) => {
+    const { email, message, rating } = this.state;
+    const userReview = {
+      productId,
+      email,
+      message,
+      rating,
+    };
+    this.setState((prevState) => {
+      const newReviews = [...prevState.reviewsList, userReview];
+      return {
+        reviewsList: newReviews,
+      };
+    });
   }
 
   addToCart = (product) => {
@@ -23,7 +50,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { cartProducts } = this.state;
+    const { cartProducts, reviewsList } = this.state;
     return (
       <BrowserRouter>
         <Switch>
@@ -38,6 +65,9 @@ class App extends React.Component {
             render={ (props) => (<Description
               { ...props }
               handleClick={ this.addToCart }
+              onInputChange={ this.onInputChange }
+              handlerSubmitButton={ this.handlerSubmitButton }
+              reviews={ reviewsList }
             />) }
           />
         </Switch>

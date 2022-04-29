@@ -1,6 +1,7 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Reviews from '../components/Reviews';
 import { getProductsId } from '../services/api';
 
 class Description extends React.Component {
@@ -21,7 +22,8 @@ class Description extends React.Component {
   render() {
     const { product } = this.state;
     const { thumbnail, title, price, attributes } = product;
-    const { handleClick } = this.props;
+    const { id } = attributes;
+    const { handleClick, reviews } = this.props;
     console.log(product);
     return (
       <main>
@@ -52,14 +54,21 @@ class Description extends React.Component {
 
             </button>)}
         </div>
+        <section className="opinion">
+          <Reviews
+            productId={ id }
+            reviewsList={ reviews }
+          />
+        </section>
       </main>
     );
   }
 }
 
 Description.propTypes = {
-  match: propTypes.objectOf(propTypes.any).isRequired,
-  handleClick: propTypes.func.isRequired,
+  reviews: PropTypes.arrayOf(Object).isRequired,
+  match: PropTypes.objectOf(propTypes.any).isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default Description;

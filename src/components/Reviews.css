@@ -1,0 +1,44 @@
+.section-form-container {
+  height: auto;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  width: 100vh;
+}
+
+.rating-form {
+  border: 2px solid black;
+  padding: 10px;
+  width: 100%;
+}
+
+.rating-form input {
+  border: 1px solid black;
+  height: 20px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 200px;
+}
+
+.txtarea-opinion {
+  align-self: center;
+  border: 1px solid black;
+  height: 100px;
+  margin-bottom: 10px;
+  resize: none;
+  width: 350px;
+}
+
+.txta-button {
+  display: flex;
+  flex-direction: column;
+  padding: auto;
+  width: 50%;
+}
+
+.txta-button button {
+  align-self: center;
+  font-size: 20px;
+  height: 30px;
+  margin-bottom: 10px;
+  width: 200px;
+}
