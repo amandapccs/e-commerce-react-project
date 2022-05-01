@@ -22,7 +22,6 @@ class Description extends React.Component {
     const { product } = this.state;
     const { thumbnail, title, price, attributes } = product;
     const { handleClick } = this.props;
-    console.log(product);
     return (
       <main>
         <Link to="/shopping-cart" data-testid="shopping-cart-button">Ir ao Carrinho</Link>
