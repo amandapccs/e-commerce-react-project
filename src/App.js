@@ -15,11 +15,20 @@ class App extends React.Component {
 
   addToCart = (product) => {
     const { cartProducts } = this.state;
+    let prevState = [...cartProducts];
 
-    this.setState((prevState) => ({ cartProducts: [...prevState.cartProducts, product] }),
-      () => {
-        localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    const existeProduct = prevState.find((prod) => prod.id === product.id);
+    if (existeProduct) {
+      prevState = prevState.map((prod) => {
+        if (prod.id === product.id) {
+          prod.quantity += 1;
+        }
+        return prod;
       });
+    } else {
+      prevState = [...prevState, { ...product, quantity: 1 }];
+    }
+    this.setState({ cartProducts: prevState });
   }
 
   render() {
