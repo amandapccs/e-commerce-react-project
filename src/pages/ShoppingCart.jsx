@@ -9,7 +9,7 @@ export default class ShoppingCart extends React.Component {
     const isEmpty = cartProducts.length === 0;
     return (
       <section>
-        <Link to="/">Home</Link>
+        <Link to="/"><img src="https://super.so/icon/dark/corner-up-left.svg" alt="home" /></Link>
         {isEmpty
         && (<p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>)}
         { cartProducts.map((product) => (

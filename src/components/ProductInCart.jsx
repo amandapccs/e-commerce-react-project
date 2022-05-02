@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './ProductInCart.module.css';
 
 export default class ProductInCart extends React.Component {
   constructor() {
@@ -21,7 +22,7 @@ export default class ProductInCart extends React.Component {
     const { products } = this.props;
     const { quantity } = this.state;
     return (
-      <div key={ products.id }>
+      <div key={ products.id } className={ styles.div }>
         <p data-testid="shopping-cart-product-name">{ products.title }</p>
         <img src={ products.thumbnail } alt={ products.title } />
         <p>{ products.price }</p>
@@ -30,20 +31,23 @@ export default class ProductInCart extends React.Component {
           { quantity }
           {' '}
         </p>
-        <button
-          type="button"
-          data-testid="product-increase-quantity"
-          onClick={ this.addQuantity }
-        >
-          +
-        </button>
-        <button
-          type="button"
-          data-testid="product-decrease-quantity"
-          onClick={ this.subtractQuantity }
-        >
-          -
-        </button>
+
+        <div className={ styles.buttons }>
+          <button
+            type="button"
+            data-testid="product-increase-quantity"
+            onClick={ this.addQuantity }
+          >
+            +
+          </button>
+          <button
+            type="button"
+            data-testid="product-decrease-quantity"
+            onClick={ this.subtractQuantity }
+          >
+            -
+          </button>
+        </div>
       </div>
     );
   }

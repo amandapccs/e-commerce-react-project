@@ -1,0 +1,37 @@
+.div {
+  align-items: center;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  width: 250px;
+}
+
+.productlink {
+  color: midnightblue;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.div img {
+  width: 150px;
+}
+
+.div button {
+  background-color: var(--accent);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.div button:hover {
+  cursor: pointer;
+}
