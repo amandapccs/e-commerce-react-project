@@ -19,6 +19,14 @@
   text-align: start;
 }
 
+.search button {
+  background-color: var(--accent);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  margin-right: 15px;
+}
+
 .categories button:hover {
   background-color: var(--accent);
   cursor: pointer;
@@ -34,8 +42,8 @@
 }
 
 .search {
-  justify-content: center;
   display: flex;
+  justify-content: center;
   padding: 10px;
 }
 
@@ -46,14 +54,6 @@
   margin-right: 10px;
   padding: 10px;
   width: 500px;
-}
-
-.search button {
-  background-color: var(--accent);
-  border: none;
-  border-radius: 3px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  margin-right: 15px;
 }
 
 .search button:hover {

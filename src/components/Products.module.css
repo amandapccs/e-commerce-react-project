@@ -12,8 +12,8 @@
 }
 
 .productlink {
-  color: midnightblue;
   align-items: center;
+  color: midnightblue;
   display: flex;
   flex-direction: column;
   text-decoration: none;
