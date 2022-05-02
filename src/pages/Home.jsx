@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import Products from '../components/Products';
+import styles from './Home.module.css';
 
 class Home extends React.Component {
   constructor() {
@@ -41,9 +42,9 @@ class Home extends React.Component {
     const { categoriesList, products } = this.state;
     const { addToCart } = this.props;
     return (
-      <div>
-        <aside>
-          <h3>Categorias:</h3>
+      <div className={ styles.maindiv }>
+        <aside className={ styles.categories }>
+          <h3>CATEGORIAS</h3>
           {categoriesList.map((category) => (
             <button
               key={ category.id }
@@ -57,29 +58,36 @@ class Home extends React.Component {
 
           ))}
         </aside>
+        <div className={ styles.searchAndProducts }>
+          <section className={ styles.search }>
+            <label htmlFor="pesquisar">
+              <input
+                id="pesquisar"
+                data-testid="query-input"
+                onChange={ this.handleChange }
+              />
+            </label>
+            <button
+              data-testid="query-button"
+              type="button"
+              onClick={ this.handleClick }
+            >
+              Buscar
 
-        <label htmlFor="pesquisar">
-          <input
-            id="pesquisar"
-            data-testid="query-input"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          data-testid="query-button"
-          type="button"
-          onClick={ this.handleClick }
-        >
-          Buscar
+            </button>
+            <Link to="shopping-cart" data-testid="shopping-cart-button"><img src="https://super.so/icon/dark/shopping-cart.svg" alt="cart" /></Link>
+          </section>
 
-        </button>
-        <Link to="shopping-cart" data-testid="shopping-cart-button">Ir ao Carrinho</Link>
-        <p data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </p>
+          <p data-testid="home-initial-message">
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </p>
 
-        { products !== null
+          <section className={ styles.products }>
+            { products !== null
         && <Products products={ products } handleClick={ addToCart } /> }
+          </section>
+
+        </div>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import styles from './Products.module.css';
 
 export default class Products extends React.Component {
   render() {
@@ -9,14 +10,15 @@ export default class Products extends React.Component {
     // console.log(results, products);
     return (
       results.map((product) => (
-        <div data-testid="product" key={ product.id }>
+        <div data-testid="product" key={ product.id } className={ styles.div }>
           <Link
             to={ `/description/${product.id}` }
             data-testid="product-detail-link"
+            className={ styles.productlink }
           >
             <p>{ product.title }</p>
             <img src={ product.thumbnail } alt={ product.title } />
-            <p data-testid="shopping-cart-product-name">{ product.price }</p>
+            <p data-testid="shopping-cart-product-name">{`R$: ${product.price}` }</p>
           </Link>
           <button
             type="button"

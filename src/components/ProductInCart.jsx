@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './ProductInCart.module.css';
 
 export default class ProductInCart extends React.Component {
   updateQuantity = ({ target }) => {
@@ -17,7 +18,7 @@ export default class ProductInCart extends React.Component {
   render() {
     const { products } = this.props;
     return (
-      <div key={ products.id }>
+      <div key={ products.id } className={ styles.div }>
         <p data-testid="shopping-cart-product-name">{ products.title }</p>
         <img src={ products.thumbnail } alt={ products.title } />
         <p>{ products.price }</p>
@@ -26,22 +27,24 @@ export default class ProductInCart extends React.Component {
           { products.quantity }
           {' '}
         </p>
-        <button
-          type="button"
-          name="increase"
-          data-testid="product-increase-quantity"
-          onClick={ this.updateQuantity }
-        >
-          +
-        </button>
-        <button
-          type="button"
-          name="decrease"
-          data-testid="product-decrease-quantity"
-          onClick={ this.updateQuantity }
-        >
-          -
-        </button>
+        <div className={ styles.buttons }>
+          <button
+            type="button"
+            name="increase"
+            data-testid="product-increase-quantity"
+            onClick={ this.updateQuantity }
+          >
+            +
+          </button>
+          <button
+            type="button"
+            name="decrease"
+            data-testid="product-decrease-quantity"
+            onClick={ this.updateQuantity }
+          >
+            -
+          </button>
+        </div>
       </div>
     );
   }
