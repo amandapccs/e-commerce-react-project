@@ -1,6 +1,7 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Reviews from '../components/Reviews';
 import { getProductsId } from '../services/api';
 
 class Description extends React.Component {
@@ -14,13 +15,25 @@ class Description extends React.Component {
   async componentDidMount() {
     const { match } = this.props;
     const description = await getProductsId(match.params.id);
-    console.log(description);
     this.setState({ product: description });
   }
 
   render() {
     const { product } = this.state;
     const { thumbnail, title, price, attributes } = product;
+    // const { id } = attributes;
+    const { handleClick,
+      onInputChange,
+      handlerSubmitButton,
+      handlerRate,
+      reviewsList,
+      email,
+      message,
+      match: {
+        params: {
+          id },
+      },
+    } = this.props;
     const { handleClick } = this.props;
     return (
       <main>
@@ -51,14 +64,31 @@ class Description extends React.Component {
 
             </button>)}
         </div>
+        <section className="opinion">
+          <Reviews
+            email={ email }
+            message={ message }
+            productId={ id }
+            reviewsList={ reviewsList }
+            onInputChange={ onInputChange }
+            handlerSubmitButton={ handlerSubmitButton }
+            handlerRate={ handlerRate }
+          />
+        </section>
       </main>
     );
   }
 }
 
 Description.propTypes = {
-  match: propTypes.objectOf(propTypes.any).isRequired,
-  handleClick: propTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  reviewsList: PropTypes.arrayOf(Object).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleClick: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  handlerSubmitButton: PropTypes.func.isRequired,
+  handlerRate: PropTypes.func.isRequired,
 };
 
 export default Description;
