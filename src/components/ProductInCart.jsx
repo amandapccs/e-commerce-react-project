@@ -2,24 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class ProductInCart extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      quantity: 1,
-    };
-  }
-
-  addQuantity = () => {
-    this.setState((prevState) => ({ quantity: prevState.quantity + 1 }));
-  }
-
-  subtractQuantity = () => {
-    this.setState((prevState) => ({ quantity: prevState.quantity - 1 }));
+  updateQuantity = ({ target }) => {
+    const { products } = this.props;
+    const { name } = target;
+    if (name === 'increase') {
+      products.quantity += 1;
+    }
+    if (name === 'decrease' && products.quantity > 1) {
+      products.quantity -= 1;
+    }
+    this.forceUpdate();
   }
 
   render() {
     const { products } = this.props;
-    const { quantity } = this.state;
     return (
       <div key={ products.id }>
         <p data-testid="shopping-cart-product-name">{ products.title }</p>
@@ -27,20 +23,22 @@ export default class ProductInCart extends React.Component {
         <p>{ products.price }</p>
         <p data-testid="shopping-cart-product-quantity">
           {' '}
-          { quantity }
+          { products.quantity }
           {' '}
         </p>
         <button
           type="button"
+          name="increase"
           data-testid="product-increase-quantity"
-          onClick={ this.addQuantity }
+          onClick={ this.updateQuantity }
         >
           +
         </button>
         <button
           type="button"
+          name="decrease"
           data-testid="product-decrease-quantity"
-          onClick={ this.subtractQuantity }
+          onClick={ this.updateQuantity }
         >
           -
         </button>
@@ -50,5 +48,5 @@ export default class ProductInCart extends React.Component {
 }
 
 ProductInCart.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.any).isRequired,
+  products: PropTypes.objectOf(PropTypes.any).isRequired,
 };

@@ -12,8 +12,11 @@ export default class ShoppingCart extends React.Component {
         <Link to="/">Home</Link>
         {isEmpty
         && (<p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>)}
-        { cartProducts.map((product) => (
-          <ProductInCart key={ product.id } products={ product } />
+        { cartProducts.map((product, index) => (
+          <ProductInCart
+            key={ index }
+            products={ product }
+          />
         )) }
       </section>
 
