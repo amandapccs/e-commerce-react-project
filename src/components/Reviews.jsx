@@ -4,14 +4,16 @@ import './Reviews.css';
 
 class Reviews extends Component {
   render() {
+    const rate = ['1', '2', '3', '4', '5'];
     const { email,
-      id,
+      productId,
       message,
-      rating,
       reviewsList,
       onInputChange,
       handlerSubmitButton,
+      handlerRate,
     } = this.props;
+    const newReviewsList = reviewsList.filter((r) => r.productId === productId);
     return (
       <section className="section-form-container">
         <h3 className="form-title">Avaliações</h3>
@@ -25,14 +27,25 @@ class Reviews extends Component {
               value={ email }
               onChange={ onInputChange }
             />
-            <span
-              role="img"
-              aria-label="star"
-              data-testid={ `${index}-rating` }
-            >
-              ⭐⭐⭐⭐⭐
-              {rating}
-            </span>
+            <div>
+              {rate.map((grade, index) => (
+                <button
+                  type="button"
+                  className="btn-rate"
+                  onClick={ () => handlerRate(grade) }
+                  data-testid={ `${grade}-rating` }
+                  key={ index }
+                >
+                  <span
+                    role="img"
+                    aria-label="star"
+                  >
+                    ⭐
+
+                  </span>
+                </button>
+              ))}
+            </div>
           </section>
           <section className="txta-button">
             <textarea
@@ -44,20 +57,31 @@ class Reviews extends Component {
               onChange={ onInputChange }
             />
             <button
-              type="submit"
-              onClick={ () => handlerSubmitButton(id) }
+              type="button"
+              data-testid="submit-review-btn"
+              onClick={ () => handlerSubmitButton(productId) }
             >
               Avaliar
             </button>
           </section>
         </form>
         <section>
-          {reviewsList.map((review) => (
-            <section>
-              
-      email,
-      message,
-      rating,
+          {newReviewsList.map((review) => (
+            <section key={ review.email }>
+              <section className="reviews-header">
+                <p>
+                  { review.email }
+                </p>
+                <span>
+                  { review.rating }
+                </span>
+              </section>
+              <section className="review-message">
+                <p>
+                  { review.message }
+                </p>
+              </section>
+              <hr />
             </section>
           ))}
         </section>
@@ -68,11 +92,11 @@ class Reviews extends Component {
 }
 
 Reviews.propTypes = {
-  id: PropTypes.string.isRequired,
+  productId: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  rating: PropTypes.string.isRequired,
   reviewsList: PropTypes.arrayOf(Object).isRequired,
+  handlerRate: PropTypes.func.isRequired,
   handlerSubmitButton: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
 };

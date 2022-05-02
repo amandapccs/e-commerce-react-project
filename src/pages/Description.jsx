@@ -15,16 +15,25 @@ class Description extends React.Component {
   async componentDidMount() {
     const { match } = this.props;
     const description = await getProductsId(match.params.id);
-    console.log(description);
     this.setState({ product: description });
   }
 
   render() {
     const { product } = this.state;
     const { thumbnail, title, price, attributes } = product;
-    const { id } = attributes;
-    const { handleClick, reviews } = this.props;
-    console.log(product);
+    // const { id } = attributes;
+    const { handleClick,
+      onInputChange,
+      handlerSubmitButton,
+      handlerRate,
+      reviewsList,
+      email,
+      message,
+      match: {
+        params: {
+          id },
+      },
+    } = this.props;
     return (
       <main>
         <Link to="/shopping-cart" data-testid="shopping-cart-button">Ir ao Carrinho</Link>
@@ -56,8 +65,13 @@ class Description extends React.Component {
         </div>
         <section className="opinion">
           <Reviews
+            email={ email }
+            message={ message }
             productId={ id }
-            reviewsList={ reviews }
+            reviewsList={ reviewsList }
+            onInputChange={ onInputChange }
+            handlerSubmitButton={ handlerSubmitButton }
+            handlerRate={ handlerRate }
           />
         </section>
       </main>
@@ -66,9 +80,14 @@ class Description extends React.Component {
 }
 
 Description.propTypes = {
-  reviews: PropTypes.arrayOf(Object).isRequired,
-  match: PropTypes.objectOf(propTypes.any).isRequired,
+  email: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  reviewsList: PropTypes.arrayOf(Object).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   handleClick: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  handlerSubmitButton: PropTypes.func.isRequired,
+  handlerRate: PropTypes.func.isRequired,
 };
 
 export default Description;

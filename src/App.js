@@ -17,6 +17,11 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const returnedReviwes = JSON.parse(localStorage.getItem('reviews'));
+    this.setState({ reviewsList: returnedReviwes || [] });
+  }
+
   onInputChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
@@ -34,8 +39,12 @@ class App extends React.Component {
     };
     this.setState((prevState) => {
       const newReviews = [...prevState.reviewsList, userReview];
+      localStorage.setItem('reviews', JSON.stringify(newReviews));
       return {
         reviewsList: newReviews,
+        email: '',
+        message: '',
+        rating: 0,
       };
     });
   }
@@ -49,8 +58,12 @@ class App extends React.Component {
       });
   }
 
+  handlerRate = (grade) => {
+    this.setState({ rating: grade });
+  }
+
   render() {
-    const { cartProducts, reviewsList } = this.state;
+    const { cartProducts, email, message, reviewsList } = this.state;
     return (
       <BrowserRouter>
         <Switch>
@@ -64,10 +77,13 @@ class App extends React.Component {
             path="/description/:id"
             render={ (props) => (<Description
               { ...props }
+              email={ email }
+              message={ message }
               handleClick={ this.addToCart }
               onInputChange={ this.onInputChange }
               handlerSubmitButton={ this.handlerSubmitButton }
-              reviews={ reviewsList }
+              handlerRate={ this.handlerRate }
+              reviewsList={ reviewsList }
             />) }
           />
         </Switch>
