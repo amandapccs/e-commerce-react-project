@@ -34,7 +34,6 @@ class Description extends React.Component {
           id },
       },
     } = this.props;
-    const { handleClick } = this.props;
     return (
       <main>
         <Link to="/shopping-cart" data-testid="shopping-cart-button">Ir ao Carrinho</Link>
