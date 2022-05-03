@@ -8,7 +8,7 @@ class Description extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: [],
+      product: null,
     };
   }
 
@@ -20,7 +20,13 @@ class Description extends React.Component {
 
   render() {
     const { product } = this.state;
-    const { thumbnail, title, price, attributes } = product;
+    if (!product) {
+      return '... Carregando';
+    }
+    console.log('--------', product);
+    const { thumbnail, title, price, attributes,
+      shipping: { free_shipping: freeShipping } } = product;
+    console.log(freeShipping);
     const { handleClick,
       totalCart,
       onInputChange,
@@ -40,6 +46,8 @@ class Description extends React.Component {
         <p data-testid="shopping-cart-size">{ totalCart() }</p>
         <div data-testid="product-detail-name">
           <h2>{ `${title} - R$${price}` }</h2>
+          {freeShipping
+            && <p data-testid="free-shipping">Frete Grátis</p>}
           <img src={ thumbnail } alt={ title } />
         </div>
         <div>
