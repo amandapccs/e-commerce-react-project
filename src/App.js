@@ -4,6 +4,7 @@ import './App.css';
 import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
 import Description from './pages/Description';
+import Checkout from './pages/Checkout';
 
 class App extends React.Component {
   constructor() {
@@ -94,6 +95,10 @@ class App extends React.Component {
               handlerRate={ this.handlerRate }
               reviewsList={ reviewsList }
             />) }
+          />
+          <Route
+            path="/checkout"
+            render={ () => <Checkout cartProducts={ cartProducts } /> }
           />
         </Switch>
       </BrowserRouter>
