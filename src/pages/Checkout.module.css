@@ -1,0 +1,28 @@
+.checkoutProducts {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 15px 20px;
+  padding: 10px;
+}
+
+.div {
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  margin: 10px 0px;
+  padding: 10px;
+  width: 100%;
+}
+
+.cartLink {
+  display: flex;
+  margin: 20px;
+  text-decoration: none;
+}
+
+.cartLink span {
+  color: black;
+  margin-left: 5px;
+}
