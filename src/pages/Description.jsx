@@ -20,13 +20,6 @@ class Description extends React.Component {
 
   render() {
     const { product } = this.state;
-    if (!product) {
-      return '... Carregando';
-    }
-    console.log('--------', product);
-    const { thumbnail, title, price, attributes,
-      shipping: { free_shipping: freeShipping } } = product;
-    console.log(freeShipping);
     const { handleClick,
       totalCart,
       onInputChange,
@@ -40,6 +33,13 @@ class Description extends React.Component {
           id },
       },
     } = this.props;
+    if (!product) {
+      return (<p data-testid="shopping-cart-size">{ totalCart() }</p>);
+    }
+    // console.log('--------', product);
+    const { thumbnail, title, price, attributes,
+      shipping: { free_shipping: freeShipping } } = product;
+    // console.log(freeShipping);
     return (
       <main>
         <Link to="/shopping-cart" data-testid="shopping-cart-button">Ir ao Carrinho</Link>
