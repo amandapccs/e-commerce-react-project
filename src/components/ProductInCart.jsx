@@ -4,7 +4,7 @@ import styles from './ProductInCart.module.css';
 
 export default class ProductInCart extends React.Component {
   updateQuantity = ({ target }) => {
-    const { products } = this.props;
+    const { products, cartProducts, saveStorage } = this.props;
     const { name } = target;
     if (name === 'increase') {
       products.quantity += 1;
@@ -12,6 +12,7 @@ export default class ProductInCart extends React.Component {
     if (name === 'decrease' && products.quantity > 1) {
       products.quantity -= 1;
     }
+    saveStorage('cartProducts', cartProducts);
     this.forceUpdate();
   }
 
@@ -52,4 +53,6 @@ export default class ProductInCart extends React.Component {
 
 ProductInCart.propTypes = {
   products: PropTypes.objectOf(PropTypes.any).isRequired,
+  saveStorage: PropTypes.func.isRequired,
+  cartProducts: PropTypes.arrayOf(PropTypes.any).isRequired,
 };

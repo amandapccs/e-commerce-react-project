@@ -18,9 +18,9 @@ class Home extends React.Component {
 
   async componentDidMount() {
     const list = await getCategories();
-    this.setState({ categoriesList: list,
+    this.setState({
+      categoriesList: list,
     });
-    // console.log(this.list);
   }
 
   handleChange = ({ target }) => {
@@ -40,7 +40,7 @@ class Home extends React.Component {
 
   render() {
     const { categoriesList, products } = this.state;
-    const { addToCart } = this.props;
+    const { addToCart, totalCart } = this.props;
     return (
       <div className={ styles.maindiv }>
         <aside className={ styles.categories }>
@@ -76,6 +76,7 @@ class Home extends React.Component {
 
             </button>
             <Link to="shopping-cart" data-testid="shopping-cart-button"><img src="https://super.so/icon/dark/shopping-cart.svg" alt="cart" /></Link>
+            <p data-testid="shopping-cart-size">{ totalCart() }</p>
           </section>
 
           <p data-testid="home-initial-message">
@@ -95,6 +96,7 @@ class Home extends React.Component {
 
 Home.propTypes = {
   addToCart: PropTypes.func.isRequired,
+  totalCart: PropTypes.func.isRequired,
 };
 
 export default Home;
