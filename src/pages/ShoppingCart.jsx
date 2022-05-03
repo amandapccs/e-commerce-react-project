@@ -5,7 +5,7 @@ import ProductInCart from '../components/ProductInCart';
 
 export default class ShoppingCart extends React.Component {
   render() {
-    const { cartProducts } = this.props;
+    const { cartProducts, saveStorage } = this.props;
     const isEmpty = cartProducts.length === 0;
     return (
       <section>
@@ -16,6 +16,8 @@ export default class ShoppingCart extends React.Component {
           <ProductInCart
             key={ index }
             products={ product }
+            cartProducts={ cartProducts }
+            saveStorage={ saveStorage }
           />
         )) }
       </section>
@@ -26,4 +28,5 @@ export default class ShoppingCart extends React.Component {
 
 ShoppingCart.propTypes = {
   cartProducts: propTypes.arrayOf(propTypes.any).isRequired,
+  saveStorage: propTypes.func.isRequired,
 };

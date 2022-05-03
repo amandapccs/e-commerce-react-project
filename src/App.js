@@ -18,8 +18,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const returnedReviwes = JSON.parse(localStorage.getItem('reviews'));
-    this.setState({ reviewsList: returnedReviwes || [] });
+    const returnedReviwes = this.getStorage('reviews');
+    const returnedCartProducts = this.getStorage('cartProducts');
+    if (returnedCartProducts !== null) {
+      this.setState({
+        reviewsList: returnedReviwes || [],
+        cartProducts: returnedCartProducts,
+      });
+    }
+    this.setState({
+      reviewsList: returnedReviwes || [],
+    });
   }
 
   onInputChange = ({ target }) => {
@@ -39,7 +48,7 @@ class App extends React.Component {
     };
     this.setState((prevState) => {
       const newReviews = [...prevState.reviewsList, userReview];
-      localStorage.setItem('reviews', JSON.stringify(newReviews));
+      this.saveStorage('reviews', newReviews);
       return {
         reviewsList: newReviews,
         email: '',
@@ -47,6 +56,10 @@ class App extends React.Component {
         rating: 0,
       };
     });
+  }
+
+  getStorage(chave) {
+    return JSON.parse(localStorage.getItem(chave));
   }
 
   addToCart = (product) => {
@@ -64,11 +77,25 @@ class App extends React.Component {
     } else {
       prevState = [...prevState, { ...product, quantity: 1 }];
     }
-    this.setState({ cartProducts: prevState });
+    this.setState({ cartProducts: prevState },
+      this.saveStorage('cartProducts', prevState));
   }
 
   handlerRate = (grade) => {
     this.setState({ rating: grade });
+  }
+
+  totalCart = () => {
+    const { cartProducts } = this.state;
+    if (!cartProducts) {
+      return 0;
+    }
+    const totalCart = cartProducts.reduce((prev, curr) => prev + curr.quantity, 0);
+    return totalCart;
+  }
+
+  saveStorage(chave, valor) {
+    localStorage.setItem(chave, JSON.stringify(valor));
   }
 
   render() {
@@ -76,10 +103,21 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" render={ () => <Home addToCart={ this.addToCart } /> } />
+          <Route
+            exact
+            path="/"
+            render={ () => (<Home
+              addToCart={ this.addToCart }
+              totalCart={ this.totalCart }
+            />) }
+          />
           <Route
             path="/shopping-cart"
-            render={ () => <ShoppingCart cartProducts={ cartProducts } /> }
+            render={ () => (<ShoppingCart
+              cartProducts={ cartProducts }
+              saveStorage={ this.saveStorage }
+              getStorage={ this.getStorage }
+            />) }
           />
           <Route
             exact
@@ -93,6 +131,7 @@ class App extends React.Component {
               handlerSubmitButton={ this.handlerSubmitButton }
               handlerRate={ this.handlerRate }
               reviewsList={ reviewsList }
+              totalCart={ this.totalCart }
             />) }
           />
         </Switch>

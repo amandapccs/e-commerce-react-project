@@ -21,8 +21,8 @@ class Description extends React.Component {
   render() {
     const { product } = this.state;
     const { thumbnail, title, price, attributes } = product;
-    // const { id } = attributes;
     const { handleClick,
+      totalCart,
       onInputChange,
       handlerSubmitButton,
       handlerRate,
@@ -37,6 +37,7 @@ class Description extends React.Component {
     return (
       <main>
         <Link to="/shopping-cart" data-testid="shopping-cart-button">Ir ao Carrinho</Link>
+        <p data-testid="shopping-cart-size">{ totalCart() }</p>
         <div data-testid="product-detail-name">
           <h2>{ `${title} - R$${price}` }</h2>
           <img src={ thumbnail } alt={ title } />
@@ -88,6 +89,7 @@ Description.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   handlerSubmitButton: PropTypes.func.isRequired,
   handlerRate: PropTypes.func.isRequired,
+  totalCart: PropTypes.func.isRequired,
 };
 
 export default Description;
