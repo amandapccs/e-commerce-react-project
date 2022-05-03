@@ -30,6 +30,7 @@ export default class ProductInCart extends React.Component {
         </p>
         <div className={ styles.buttons }>
           <button
+            disabled={ products.quantity === products.available_quantity }
             type="button"
             name="increase"
             data-testid="product-increase-quantity"

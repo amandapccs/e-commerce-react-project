@@ -40,7 +40,7 @@ class Home extends React.Component {
 
   render() {
     const { categoriesList, products } = this.state;
-    const { addToCart, totalCart } = this.props;
+    const { addToCart, totalCart, cartProducts } = this.props;
     return (
       <div className={ styles.maindiv }>
         <aside className={ styles.categories }>
@@ -85,7 +85,11 @@ class Home extends React.Component {
 
           <section className={ styles.products }>
             { products !== null
-        && <Products products={ products } handleClick={ addToCart } /> }
+        && <Products
+          products={ products }
+          handleClick={ addToCart }
+          cartProducts={ cartProducts }
+        /> }
           </section>
 
         </div>
@@ -97,6 +101,7 @@ class Home extends React.Component {
 Home.propTypes = {
   addToCart: PropTypes.func.isRequired,
   totalCart: PropTypes.func.isRequired,
+  cartProducts: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Home;
