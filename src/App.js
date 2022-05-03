@@ -59,14 +59,11 @@ class App extends React.Component {
     });
   }
 
-  getStorage(chave) {
-    return JSON.parse(localStorage.getItem(chave));
-  }
+  getStorage = (chave) => JSON.parse(localStorage.getItem(chave));
 
   addToCart = (product) => {
     const { cartProducts } = this.state;
     let prevState = [...cartProducts];
-
     const existeProduct = prevState.find((prod) => prod.id === product.id);
     if (existeProduct) {
       prevState = prevState.map((prod) => {
@@ -95,7 +92,7 @@ class App extends React.Component {
     return totalCart;
   }
 
-  saveStorage(chave, valor) {
+  saveStorage = (chave, valor) => {
     localStorage.setItem(chave, JSON.stringify(valor));
   }
 
@@ -110,6 +107,7 @@ class App extends React.Component {
             render={ () => (<Home
               addToCart={ this.addToCart }
               totalCart={ this.totalCart }
+              cartProducts={ cartProducts }
             />) }
           />
           <Route
@@ -118,6 +116,7 @@ class App extends React.Component {
               cartProducts={ cartProducts }
               saveStorage={ this.saveStorage }
               getStorage={ this.getStorage }
+              updateButton={ this.updateButton }
             />) }
           />
           <Route
